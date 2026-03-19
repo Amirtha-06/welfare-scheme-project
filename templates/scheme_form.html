@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Scheme — Welfare Intelligence{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width:820px; padding-top:2rem; padding-bottom:4rem;">
+
+  <div class="page-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+    <div>
+      <div class="section-label">Administrator Panel</div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;">
+        {% if action == "Add" %}
+          <i class="bi bi-plus-circle me-2" style="color:var(--accent2);"></i>Add New Scheme
+        {% else %}
+          <i class="bi bi-pencil-square me-2" style="color:var(--accent);"></i>Edit Scheme
+        {% endif %}
+      </h2>
+    </div>
+    <a href="/admin/schemes" class="btn-wl-outline">
+      <i class="bi bi-arrow-left"></i> Back to Schemes
+    </a>
+  </div>
+
+  <div class="wcard p-4">
+    <form method="POST">
+
+      <!-- Row 1: Scheme Name -->
+      <div class="mb-3">
+        <label class="form-label fw-600">Scheme Name <span style="color:var(--danger);">*</span></label>
+        <input type="text" name="scheme_name" class="form-control" required
+          value="{{ scheme[1] if scheme else '' }}" placeholder="e.g. Pradhan Mantri Awas Yojana">
+      </div>
+
+      <!-- Row 2: Short Description -->
+      <div class="mb-3">
+        <label class="form-label fw-600">Short Description <span style="color:var(--danger);">*</span></label>
+        <input type="text" name="short_description" class="form-control" required
+          value="{{ scheme[2] if scheme else '' }}" placeholder="One-line summary of the scheme">
+      </div>
+
+      <!-- Row 3: Full Description -->
+      <div class="mb-3">
+        <label class="form-label fw-600">Full Description</label>
+        <textarea name="full_description" class="form-control" rows="4"
+          placeholder="Detailed description of the scheme, its objectives and coverage.">{{ scheme[3] if scheme else '' }}</textarea>
+      </div>
+
+      <!-- Row 4: Age & Income -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label class="form-label fw-600">Min Age <span style="color:var(--danger);">*</span></label>
+          <input type="number" name="min_age" class="form-control" required min="0" max="100"
+            value="{{ scheme[4] if scheme else 18 }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-600">Max Age <span style="color:var(--danger);">*</span></label>
+          <input type="number" name="max_age" class="form-control" required min="0" max="120"
+            value="{{ scheme[5] if scheme else 60 }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-600">Max Annual Income (₹) <span style="color:var(--danger);">*</span></label>
+          <input type="number" name="max_income" class="form-control" required min="0"
+            value="{{ scheme[6] if scheme else 300000 }}">
+        </div>
+      </div>
+
+      <!-- Row 5: Category, State, Scheme Type -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label class="form-label fw-600">Category</label>
+          <select name="category" class="form-select">
+            {% for opt in ['All','SC/ST','OBC','General','Minority','Women','Differently-Abled'] %}
+              <option value="{{ opt }}" {% if scheme and scheme[7] == opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-600">State</label>
+          <select name="state" class="form-select">
+            {% for opt in ['All','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi','Jammu & Kashmir'] %}
+              <option value="{{ opt }}" {% if scheme and scheme[8] == opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-600">Scheme Type</label>
+          <select name="scheme_type" class="form-select">
+            {% for opt in ['Scholarship','Housing','Loan','Skill Development','Pension','Agriculture','Health','Women Welfare','Child Welfare','Other'] %}
+              <option value="{{ opt }}" {% if scheme and scheme[13] == opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 6: Occupation, Education, Area Type -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label class="form-label fw-600">Occupation</label>
+          <select name="occupation" class="form-select">
+            {% for opt in ['All','Student','Farmer','Business','Employed','Unemployed','Retired','Self-employed'] %}
+              <option value="{{ opt }}" {% if scheme and scheme[9] == opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-600">Education</label>
+          <select name="education" class="form-select">
+            {% for opt in ['All','School','Undergraduate','Graduate','Postgraduate','Diploma','No Formal Education'] %}
+              <option value="{{ opt }}" {% if scheme and scheme[10] == opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-600">Area Type</label>
+          <select name="area_type" class="form-select">
+            {% for opt in ['All','Rural','Urban','Semi-Urban'] %}
+              <option value="{{ opt }}" {% if scheme and scheme[11] == opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 7: Benefit Amount -->
+      <div class="mb-3">
+        <label class="form-label fw-600">Benefit Amount (₹) <span style="color:var(--danger);">*</span></label>
+        <input type="number" name="benefit_amount" class="form-control" required min="0"
+          value="{{ scheme[12] if scheme else 0 }}" placeholder="e.g. 50000">
+      </div>
+
+      <!-- Row 8: Eligibility Details -->
+      <div class="mb-3">
+        <label class="form-label fw-600">Eligibility Details</label>
+        <textarea name="eligibility_details" class="form-control" rows="3"
+          placeholder="Semicolon-separated criteria e.g. Indian citizen;Income below 3L;Aadhaar mandatory">{{ scheme[14] if scheme else '' }}</textarea>
+        <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">Separate each condition with a semicolon ( ; )</div>
+      </div>
+
+      <!-- Row 9: Application Steps -->
+      <div class="mb-3">
+        <label class="form-label fw-600">Application Steps</label>
+        <textarea name="application_steps" class="form-control" rows="3"
+          placeholder="Step 1;Step 2;Step 3">{{ scheme[15] if scheme else '' }}</textarea>
+        <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">Separate each step with a semicolon ( ; )</div>
+      </div>
+
+      <!-- Row 10: Documents Required -->
+      <div class="mb-3">
+        <label class="form-label fw-600">Documents Required</label>
+        <input type="text" name="documents_required" class="form-control"
+          value="{{ scheme[16] if scheme else '' }}" placeholder="Aadhaar Card;Income Certificate;Bank Details">
+        <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">Separate documents with a semicolon ( ; )</div>
+      </div>
+
+      <!-- Row 11: Reference Link -->
+      <div class="mb-4">
+        <label class="form-label fw-600">Official Reference Link</label>
+        <input type="url" name="reference_link" class="form-control"
+          value="{{ scheme[17] if scheme else '' }}" placeholder="https://example.gov.in">
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex gap-3 justify-content-end">
+        <a href="/admin/schemes" class="btn-wl-outline">Cancel</a>
+        <button type="submit" class="btn-wl-primary">
+          <i class="bi bi-{{ 'plus-circle' if action == 'Add' else 'floppy' }}"></i>
+          {{ action }} Scheme
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+{% endblock %}

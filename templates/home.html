@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}Welfare Intelligence — Government Scheme Recommendation System{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO ── -->
+<section class="hero text-center">
+  <div class="hero-grid"></div>
+  <div class="container position-relative" style="z-index:2;">
+
+    <div class="hero-badge">
+      <i class="bi bi-stars"></i>
+      AI-Powered Welfare Matching
+    </div>
+
+    <h1>
+      Discover the Right <span class="highlight">Government Schemes</span><br>
+      Tailored to Your Profile
+    </h1>
+
+    <p class="lead mx-auto">
+      Our intelligent recommendation engine analyses your age, income, occupation, and category
+      to match you with the most relevant Central and State welfare programmes.
+    </p>
+
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="/register" class="btn-wl-primary" style="font-size:1rem; padding:0.75rem 2rem;">
+        <i class="bi bi-rocket-takeoff"></i> Get My Recommendations
+      </a>
+      <a href="/login" class="btn-wl-outline" style="font-size:1rem; padding:0.75rem 1.8rem;">
+        <i class="bi bi-arrow-right-circle"></i> Sign In
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">{{ total_schemes }}+</div>
+        <div class="hero-stat-label">Welfare Schemes</div>
+      </div>
+      <div style="width:1px; background: var(--border);"></div>
+      <div>
+        <div class="hero-stat-num">{{ total_users }}+</div>
+        <div class="hero-stat-label">Registered Users</div>
+      </div>
+      <div style="width:1px; background: var(--border);"></div>
+      <div>
+        <div class="hero-stat-num">95%</div>
+        <div class="hero-stat-label">Match Accuracy</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="container mt-6" style="margin-top: 5rem; max-width: 960px;">
+  <div class="text-center mb-5">
+    <div class="section-label">How It Works</div>
+    <h2 style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.75rem;">Three Steps to Your Benefits</h2>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="wcard p-4 h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div style="width:42px;height:42px;border-radius:10px;background:rgba(26,140,255,0.12);border:1px solid rgba(26,140,255,0.25);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.1rem;">
+            <i class="bi bi-person-plus"></i>
+          </div>
+          <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--muted);">STEP 01</span>
+        </div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700;">Create Your Profile</h5>
+        <p style="color:var(--muted); font-size:0.88rem;">Register with your basic details — age, income, category, occupation and education level.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="wcard p-4 h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div style="width:42px;height:42px;border-radius:10px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);display:flex;align-items:center;justify-content:center;color:var(--accent2);font-size:1.1rem;">
+            <i class="bi bi-cpu"></i>
+          </div>
+          <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--muted);">STEP 02</span>
+        </div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700;">AI Matching Engine</h5>
+        <p style="color:var(--muted); font-size:0.88rem;">Our scoring algorithm evaluates over 8 eligibility parameters and assigns a match score to every scheme.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="wcard p-4 h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div style="width:42px;height:42px;border-radius:10px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);display:flex;align-items:center;justify-content:center;color:var(--warn);font-size:1.1rem;">
+            <i class="bi bi-card-checklist"></i>
+          </div>
+          <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--muted);">STEP 03</span>
+        </div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700;">Apply with Confidence</h5>
+        <p style="color:var(--muted); font-size:0.88rem;">Get full eligibility details, required documents, and a direct link to the official government portal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="container mt-5" style="max-width: 960px;">
+  <div class="row g-3 align-items-center">
+
+    <div class="col-md-5">
+      <div class="section-label">Platform Features</div>
+      <h2 style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; margin-bottom:1.2rem;">
+        Everything You Need to Access Welfare Benefits
+      </h2>
+      <p style="color:var(--muted); margin-bottom:1.5rem;">
+        From smart recommendations to detailed scheme information — all in one place.
+      </p>
+      <a href="/register" class="btn-wl-primary">Start Now <i class="bi bi-arrow-right"></i></a>
+    </div>
+
+    <div class="col-md-7">
+      <div class="row g-3">
+        {% set features = [
+          ("bi-search-heart", "Smart Recommendations", "Personalized scheme matching based on 8+ eligibility parameters.", "blue"),
+          ("bi-bar-chart-line", "Analytics Dashboard", "Admin insights on user distribution, income, and scheme popularity.", "green"),
+          ("bi-shield-check", "Eligibility Verified", "Only see schemes you genuinely qualify for — no false leads.", "orange"),
+          ("bi-link-45deg", "Official Sources", "Every scheme links directly to its government portal.", "blue")
+        ] %}
+        {% for icon, title, desc, color in features %}
+        <div class="col-6">
+          <div class="wcard p-3">
+            <i class="bi {{ icon }} mb-2 d-block" style="font-size:1.4rem; color: {% if color=='blue' %}var(--accent){% elif color=='green' %}var(--accent2){% else %}var(--warn){% endif %}"></i>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:0.3rem;">{{ title }}</div>
+            <div style="color:var(--muted);font-size:0.8rem;">{{ desc }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

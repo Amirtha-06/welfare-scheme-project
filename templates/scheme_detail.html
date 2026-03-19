@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}{{ scheme[1] }} — Welfare Intelligence{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 860px; padding-top:2rem; padding-bottom:4rem;">
+
+  <!-- Back link -->
+  <a href="/dashboard" class="btn-wl-outline mb-4 d-inline-flex" style="font-size:0.82rem; padding:0.38rem 0.9rem;">
+    <i class="bi bi-arrow-left"></i> Back to Dashboard
+  </a>
+
+  <!-- Header card -->
+  <div class="wcard p-4 mb-4" style="border-color:rgba(26,140,255,0.3); background: linear-gradient(135deg, rgba(26,140,255,0.06), var(--card-bg));">
+    <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-2">
+      <span class="wbadge wbadge-blue">{{ scheme[13] }}</span>
+      <span class="wbadge wbadge-green">
+        <i class="bi bi-check-circle me-1"></i> Active Scheme
+      </span>
+    </div>
+    <h2 style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; margin:0.75rem 0 0.5rem;">
+      {{ scheme[1] }}
+    </h2>
+    <p style="color:var(--muted); margin:0;">{{ scheme[2] }}</p>
+  </div>
+
+  <!-- Benefit highlight -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(0,212,170,0.1); color:var(--accent2);">
+          <i class="bi bi-currency-rupee"></i>
+        </div>
+        <div class="stat-num">₹{{ "{:,.0f}".format(scheme[12]) }}</div>
+        <div class="stat-label">Benefit Amount</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(26,140,255,0.1); color:var(--accent);">
+          <i class="bi bi-people"></i>
+        </div>
+        <div class="stat-num">{{ scheme[4] }}–{{ scheme[5] }}</div>
+        <div class="stat-label">Age Range</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(245,158,11,0.1); color:var(--warn);">
+          <i class="bi bi-wallet2"></i>
+        </div>
+        <div class="stat-num" style="font-size:1.3rem;">₹{{ "{:,.0f}".format(scheme[6]) }}</div>
+        <div class="stat-label">Max Income</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="wcard p-4 mb-4">
+    <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.8rem;">
+      <i class="bi bi-file-text me-2" style="color:var(--accent);"></i>Scheme Overview
+    </h6>
+    <p style="white-space:pre-line; color:var(--muted); font-size:0.9rem; line-height:1.8; margin:0;">{{ scheme[3] }}</p>
+  </div>
+
+  <!-- Eligibility -->
+  <div class="wcard p-4 mb-4">
+    <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+      <i class="bi bi-clipboard-check me-2" style="color:var(--accent2);"></i>Eligibility Criteria
+    </h6>
+    <div class="row g-3 mb-3">
+      {% set criteria = [
+        ("bi-calendar-person", "Age Range", scheme[4]|string + " – " + scheme[5]|string + " years"),
+        ("bi-wallet2",         "Max Income", "₹" + "{:,.0f}".format(scheme[6])),
+        ("bi-people",          "Category",   scheme[7]),
+        ("bi-briefcase",       "Occupation", scheme[9]),
+        ("bi-mortarboard",     "Education",  scheme[10]),
+        ("bi-house",           "Area Type",  scheme[11])
+      ] %}
+      {% for icon, label, value in criteria %}
+      <div class="col-md-4 col-6">
+        <div style="background:var(--surface2);border-radius:10px;padding:0.75rem 1rem;border:1px solid var(--border);">
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em;">
+            <i class="bi {{ icon }} me-1"></i>{{ label }}
+          </div>
+          <div style="font-weight:600;font-size:0.88rem;color:var(--text);">{{ value }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if scheme[14] %}
+    <div style="background:rgba(26,140,255,0.05);border:1px solid rgba(26,140,255,0.15);border-radius:8px;padding:1rem;">
+      <div style="font-size:0.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">Additional Conditions</div>
+      <p style="white-space:pre-line; font-size:0.87rem; color:var(--muted); margin:0;">{{ scheme[14] }}</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Documents -->
+  <div class="wcard p-4 mb-4">
+    <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+      <i class="bi bi-folder2-open me-2" style="color:var(--warn);"></i>Required Documents
+    </h6>
+    <div class="row g-2">
+      {% for doc in scheme[16].split(';') %}
+      {% set d = doc.strip() %}
+      {% if d %}
+      <div class="col-md-6">
+        <div style="display:flex;align-items:center;gap:0.6rem;background:var(--surface2);border-radius:8px;padding:0.6rem 0.9rem;border:1px solid var(--border);">
+          <i class="bi bi-file-earmark-text" style="color:var(--accent2);font-size:0.9rem;flex-shrink:0;"></i>
+          <span style="font-size:0.85rem;">{{ d }}</span>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Application Process -->
+  <div class="wcard p-4 mb-4">
+    <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+      <i class="bi bi-send me-2" style="color:var(--accent);"></i>How to Apply
+    </h6>
+    <div>
+      {% for step in scheme[15].split(';') %}
+      {% set s = step.strip() if step else '' %}
+      {% if s %}
+      <div style="display:flex;gap:0.8rem;margin-bottom:0.85rem;align-items:flex-start;">
+        <div style="width:26px;height:26px;border-radius:50%;background:rgba(26,140,255,0.15);border:1px solid rgba(26,140,255,0.3);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:0.1rem;">
+          {{ loop.index }}
+        </div>
+        <span style="font-size:0.88rem;color:var(--muted);padding-top:0.15rem;">{{ s }}</span>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Official Portal -->
+  <div class="wcard p-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+    <div>
+      <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.25rem;">Ready to Apply?</h6>
+      <p style="color:var(--muted);font-size:0.85rem;margin:0;">Visit the official government portal to submit your application.</p>
+    </div>
+    <a href="{{ scheme[17] }}" target="_blank" class="btn-wl-primary" style="white-space:nowrap;">
+      <i class="bi bi-box-arrow-up-right"></i> Official Government Portal
+    </a>
+  </div>
+
+</div>
+{% endblock %}

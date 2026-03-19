@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Welfare Intelligence Platform{% endblock %}</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root {
+  --bg:       #070d1a;
+  --surface:  #0f1e36;
+  --surface2: #132240;
+  --border:   #1e3a5f;
+  --accent:   #1a8cff;
+  --accent2:  #00d4aa;
+  --warn:     #f59e0b;
+  --danger:   #ef4444;
+  --text:     #e2eaf5;
+  --muted:    #7a9abf;
+  --card-bg:  #0d1b30;
+  --nav-h:    64px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  height: var(--nav-h);
+  background: rgba(7, 13, 26, 0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 2rem;
+}
+
+.navbar-brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--text) !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.brand-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent2);
+  box-shadow: 0 0 10px var(--accent2);
+}
+
+.nav-btn {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.38rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: transparent;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.nav-btn:hover { border-color: var(--accent); color: var(--text); background: rgba(26,140,255,0.08); }
+.nav-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.nav-btn.primary:hover { background: #0d7de0; color: #fff; }
+.nav-btn.warn { background: rgba(245,158,11,0.12); border-color: var(--warn); color: var(--warn); }
+.nav-btn.warn:hover { background: var(--warn); color: #000; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0 5rem;
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(26,140,255,0.18) 0%, transparent 70%),
+              var(--bg);
+}
+
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(26,140,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,140,255,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0,212,170,0.1);
+  border: 1px solid rgba(0,212,170,0.3);
+  color: var(--accent2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+
+.hero h1 .highlight {
+  color: var(--accent);
+}
+
+.hero p.lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto 2rem;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.hero-stat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: var(--text);
+}
+
+.hero-stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.1rem;
+}
+
+/* ── CARDS ── */
+.wcard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.wcard:hover {
+  border-color: rgba(26,140,255,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(26,140,255,0.1);
+}
+
+/* ── FORMS ── */
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.form-control, .form-select {
+  background: var(--surface2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 8px !important;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(26,140,255,0.15) !important;
+  outline: none;
+}
+.form-control::placeholder { color: #4a6a8a; }
+.form-select option { background: var(--surface2); }
+
+/* ── BUTTONS ── */
+.btn-wl-primary {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.6rem 1.6rem;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.btn-wl-primary:hover { background: #0d7de0; color: #fff; transform: translateY(-1px); }
+
+.btn-wl-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  text-decoration: none;
+}
+.btn-wl-outline:hover { border-color: var(--accent); color: var(--text); }
+
+.btn-wl-success {
+  background: rgba(0,212,170,0.12);
+  border: 1px solid rgba(0,212,170,0.35);
+  color: var(--accent2);
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-wl-success:hover { background: rgba(0,212,170,0.2); color: var(--accent2); }
+
+/* ── ALERTS ── */
+.alert {
+  border-radius: 10px;
+  font-size: 0.88rem;
+  border: none;
+  padding: 0.75rem 1.1rem;
+}
+.alert-success { background: rgba(0,212,170,0.12); color: var(--accent2); border-left: 3px solid var(--accent2); }
+.alert-danger   { background: rgba(239,68,68,0.1);  color: #fca5a5; border-left: 3px solid var(--danger); }
+.alert-warning  { background: rgba(245,158,11,0.1); color: #fcd34d; border-left: 3px solid var(--warn); }
+.alert-info     { background: rgba(26,140,255,0.1); color: #93c5fd; border-left: 3px solid var(--accent); }
+
+/* ── BADGES ── */
+.wbadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+.wbadge-blue   { background: rgba(26,140,255,0.15); color: var(--accent); border: 1px solid rgba(26,140,255,0.3); }
+.wbadge-green  { background: rgba(0,212,170,0.12);  color: var(--accent2); border: 1px solid rgba(0,212,170,0.25); }
+.wbadge-orange { background: rgba(245,158,11,0.12); color: var(--warn);    border: 1px solid rgba(245,158,11,0.25); }
+
+/* ── PAGE SECTIONS ── */
+.page-header {
+  padding: 2.5rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.page-header h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: var(--text);
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+
+/* ── PROGRESS ── */
+.progress {
+  background: var(--surface2);
+  border-radius: 99px;
+  height: 6px;
+}
+.progress-bar {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 99px;
+}
+
+/* ── STAT TILES ── */
+.stat-tile {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+.stat-tile .stat-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.stat-tile .stat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--text);
+  line-height: 1;
+}
+.stat-tile .stat-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 1.5rem 0;
+  margin-top: 5rem;
+  text-align: center;
+}
+
+/* ── MISC ── */
+.divider { border-color: var(--border); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: #5ba8ff; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar navbar-expand-lg d-flex align-items-center justify-content-between">
+  <a class="navbar-brand" href="/">
+    <span class="brand-dot"></span>
+    Welfare Intelligence
+  </a>
+
+  <div class="d-flex align-items-center gap-2">
+    {% if session.get('is_admin') %}
+      <a href="/admin/dashboard" class="nav-btn"><i class="bi bi-speedometer2"></i> Admin Panel</a>
+      <a href="/analytics" class="nav-btn"><i class="bi bi-bar-chart-line"></i> Analytics</a>
+      <a href="/logout" class="nav-btn warn"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    {% elif session.get('user_id') %}
+      <span class="nav-btn" style="cursor:default; color: var(--muted); font-size:0.78rem;">
+        <i class="bi bi-person-circle"></i> {{ session.get('user_name') }}
+      </span>
+      <a href="/dashboard" class="nav-btn"><i class="bi bi-grid-1x2"></i> Dashboard</a>
+      <a href="/logout" class="nav-btn warn"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    {% else %}
+      <a href="/login" class="nav-btn"><i class="bi bi-person"></i> Sign In</a>
+      <a href="/admin/login" class="nav-btn warn"><i class="bi bi-shield-lock"></i> Admin</a>
+      <a href="/register" class="nav-btn primary"><i class="bi bi-plus-circle"></i> Register</a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- ── FLASH MESSAGES ── -->
+<div class="container mt-3" style="max-width:900px;">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close" style="filter:invert(1);opacity:0.5;"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+{% block content %}{% endblock %}
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <p>Welfare Intelligence Platform &mdash; Final Year Project &mdash; Government Scheme Recommendation System</p>
+    <p class="mt-1" style="font-size:0.72rem; opacity:0.5;">Built with Flask &bull; SQLite &bull; Pandas &bull; Machine Learning Scoring Algorithm</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Analytics Dashboard — Welfare Intelligence{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1100px; padding-top:2rem; padding-bottom:4rem;">
+
+  <div class="page-header d-flex align-items-center justify-content-between">
+    <div>
+      <div class="section-label">Data Intelligence</div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;">Analytics Dashboard</h2>
+    </div>
+    <a href="/admin/dashboard" class="btn-wl-outline">
+      <i class="bi bi-arrow-left"></i> Admin Panel
+    </a>
+  </div>
+
+  <!-- Top Stats -->
+  <div class="row g-3 mb-5">
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(26,140,255,0.1);color:var(--accent);">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="stat-num">{{ total_users }}</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(0,212,170,0.1);color:var(--accent2);">
+          <i class="bi bi-card-list"></i>
+        </div>
+        <div class="stat-num">{{ total_schemes }}</div>
+        <div class="stat-label">Total Schemes</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(245,158,11,0.1);color:var(--warn);">
+          <i class="bi bi-graph-up"></i>
+        </div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Chart Dimensions</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(168,85,247,0.1);color:#c084fc;">
+          <i class="bi bi-cpu"></i>
+        </div>
+        <div class="stat-num">ML</div>
+        <div class="stat-label">Scoring Engine</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="row g-4">
+
+    <div class="col-md-6">
+      <div class="wcard p-4">
+        <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+          <i class="bi bi-bar-chart me-2" style="color:var(--accent);"></i>Age Distribution
+        </h6>
+        {% if plots.age %}
+          <img src="data:image/png;base64,{{ plots.age }}" class="img-fluid" style="border-radius:8px;">
+        {% else %}
+          <div style="color:var(--muted);text-align:center;padding:2rem;">No user data yet</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="wcard p-4">
+        <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+          <i class="bi bi-cash-stack me-2" style="color:var(--accent2);"></i>Income Distribution
+        </h6>
+        {% if plots.income %}
+          <img src="data:image/png;base64,{{ plots.income }}" class="img-fluid" style="border-radius:8px;">
+        {% else %}
+          <div style="color:var(--muted);text-align:center;padding:2rem;">No user data yet</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="wcard p-4">
+        <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+          <i class="bi bi-briefcase me-2" style="color:var(--warn);"></i>Occupation Breakdown
+        </h6>
+        {% if plots.occupation %}
+          <img src="data:image/png;base64,{{ plots.occupation }}" class="img-fluid" style="border-radius:8px;">
+        {% else %}
+          <div style="color:var(--muted);text-align:center;padding:2rem;">No user data yet</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="wcard p-4">
+        <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+          <i class="bi bi-pie-chart me-2" style="color:#c084fc;"></i>Scheme Type Distribution
+        </h6>
+        {% if plots.scheme_type %}
+          <img src="data:image/png;base64,{{ plots.scheme_type }}" class="img-fluid" style="border-radius:8px;">
+        {% else %}
+          <div style="color:var(--muted);text-align:center;padding:2rem;">No data yet</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="wcard p-4">
+        <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+          <i class="bi bi-tags me-2" style="color:var(--accent2);"></i>Schemes by Category
+        </h6>
+        {% if plots.category %}
+          <img src="data:image/png;base64,{{ plots.category }}" class="img-fluid" style="border-radius:8px; max-height:300px; width:100%; object-fit:contain;">
+        {% else %}
+          <div style="color:var(--muted);text-align:center;padding:2rem;">No data yet</div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

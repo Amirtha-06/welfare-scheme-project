@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — Welfare Intelligence{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1000px; padding-top:2rem; padding-bottom:4rem;">
+
+  <div class="page-header d-flex align-items-center justify-content-between">
+    <div>
+      <div class="section-label">Administrator Panel</div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;">Control Centre</h2>
+    </div>
+    <a href="/analytics" class="btn-wl-primary">
+      <i class="bi bi-bar-chart-line"></i> View Analytics
+    </a>
+  </div>
+
+  <!-- Stats -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(26,140,255,0.1);color:var(--accent);">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="stat-num">{{ total_users }}</div>
+        <div class="stat-label">Registered Users</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(0,212,170,0.1);color:var(--accent2);">
+          <i class="bi bi-card-list"></i>
+        </div>
+        <div class="stat-num">{{ total_schemes }}</div>
+        <div class="stat-label">Active Schemes</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(245,158,11,0.1);color:var(--warn);">
+          <i class="bi bi-tags"></i>
+        </div>
+        <div class="stat-num">{{ scheme_types|length }}</div>
+        <div class="stat-label">Scheme Categories</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="stat-tile">
+        <div class="stat-icon" style="background:rgba(168,85,247,0.1);color:#c084fc;">
+          <i class="bi bi-database"></i>
+        </div>
+        <div class="stat-num">{{ total_schemes + total_users }}</div>
+        <div class="stat-label">Total Records</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Scheme type breakdown -->
+    <div class="col-md-6">
+      <div class="wcard p-4">
+        <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+          <i class="bi bi-pie-chart me-2" style="color:var(--accent);"></i>Schemes by Type
+        </h6>
+        {% for name, count in scheme_types %}
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span style="min-width:110px;font-size:0.85rem;color:var(--muted);">{{ name }}</span>
+          <div class="progress flex-grow-1" style="height:8px;">
+            <div class="progress-bar" style="width:{{ (count / total_schemes * 100)|int }}%;"></div>
+          </div>
+          <span style="font-size:0.82rem;font-weight:600;color:var(--text);min-width:20px;text-align:right;">{{ count }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="col-md-6">
+      <div class="wcard p-4">
+        <h6 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">
+          <i class="bi bi-lightning me-2" style="color:var(--accent2);"></i>Quick Actions
+        </h6>
+        <div class="d-grid gap-2">
+          <a href="/admin/schemes" class="btn-wl-outline justify-content-start">
+            <i class="bi bi-card-list" style="color:var(--accent2);"></i> Manage Schemes
+          </a>
+          <a href="/admin/schemes/add" class="btn-wl-outline justify-content-start">
+            <i class="bi bi-plus-circle" style="color:var(--accent2);"></i> Add New Scheme
+          </a>
+          <a href="/analytics" class="btn-wl-outline justify-content-start">
+            <i class="bi bi-graph-up-arrow" style="color:var(--accent);"></i> View Full Analytics
+          </a>
+          <a href="/" class="btn-wl-outline justify-content-start">
+            <i class="bi bi-house" style="color:var(--accent2);"></i> View Public Homepage
+          </a>
+          <a href="/logout" class="btn-wl-outline justify-content-start" style="color:var(--danger);border-color:rgba(239,68,68,0.3);">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
